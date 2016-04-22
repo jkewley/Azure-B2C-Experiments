@@ -2,21 +2,46 @@
 @{
     ViewBag.Title = "Claims";
 }
-<h2>@ViewBag.Title</h2>
+<section class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--full-height mbr-section--bg-adapted mbr-parallax-background" id="header1-43" style="background-image: url(assets/images/iphone-926663-1920-1920x1280-94.jpg);">
+    <div class="mbr-box__magnet mbr-box__magnet--sm-padding mbr-box__magnet--center-left">
+        <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(41, 105, 176);"></div>
+        <div class="mbr-box__container mbr-section__container container">
+            <div class="mbr-box mbr-box--stretched">
+                <div class="mbr-box__magnet mbr-box__magnet--center-left">
+                    <div class="row">
+                        <div class=" col-sm-6">
+                            <div class="mbr-hero animated fadeInUp">
+                                <h1 class="mbr-hero__text">WHO DO YOU CLAIM TO BE, @ClaimsPrincipal.Current.Identity.?</h1>
+                                <p class="mbr-hero__subtext">Seriously. What are you doing here?<br>
+                                </p>
+                            </div>
+                            <div>
+                                <table >
+                                    <tr>
+                                        <th>Claim Type</th>
+                                        <th>Claim Value</th>
+                                    </tr>
+                                    @foreach (Claim aClaim in ClaimsPrincipal.Current.Claims)
+                                    {
+                                        <tr>
+                                            <td>@aClaim.Type</td>
+                                            <td>@aClaim.Value</td>
+                                        </tr>
+                                    }
+                                </table>                                
+                            </div>
+@*                            <div class="mbr-buttons btn-inverse mbr-buttons--left"><a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-info" href="https://mobirise.com/bootstrap-template/mobirise-free-template.zip">FREE DOWNLOAD</a> <a class="mbr-buttons__btn btn btn-lg btn-default animated fadeInUp delay" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mbr-arrow mbr-arrow--floating text-center">
+            <div class="mbr-section__container container">
+                <a class="mbr-arrow__link" href="#features1-44"><i class="glyphicon glyphicon-menu-down"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
 
-<h4>Claims Present in the Claims Identity: @ViewBag.DisplayName</h4>
 
-<table class="table table-hover table-striped table-condensed">
-    <tr>
-        <th>Claim Type</th>
-        <th>Claim Value</th>
-    </tr>
-
-    @foreach (Claim claim in ClaimsPrincipal.Current.Claims)
-    {
-        <tr>
-            <td>@claim.Type</td>
-            <td>@claim.Value</td>
-        </tr>
-    }
-</table>
