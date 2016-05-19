@@ -21,7 +21,7 @@ html {
 .mbr-parallax-background,
 .mbr-background {
   background-attachment: fixed !important;
-  background-position: 50% 0;
+  OFF_background-position: 50% 0;
   background-repeat: no-repeat;
   background-size: cover !important;
 }
@@ -1221,7 +1221,7 @@ html {
 }
 .mbr-section--bg-adapted {
   background-attachment: scroll;
-  background-position: 50% 0;
+  OFF_background-position: 50% 0;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -1408,7 +1408,7 @@ html {
   text-align: right;
 }
 .mbr-box__container {
-  height: 50%;
+  OFF_height: 50%;
 }
 @media (max-width: 767px) {
   .mbr-box__container {

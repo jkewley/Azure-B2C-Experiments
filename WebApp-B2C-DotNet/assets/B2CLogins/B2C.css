@@ -1,0 +1,79 @@
+﻿        #api {
+            background-color: #2d3f44;
+            background-color: rgba(45, 63, 68, 0.49);
+            padding: 10px;
+        }
+
+        #api h2 {
+            font-size: 21px;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
+        #api label {
+            font-family: 'Oxygen', sans-serif;
+            font-size: 16px;
+            display: block;
+        }
+
+        #api .password-label label {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+
+        #forgotPassword {
+            font-size: .75em;
+            padding-left: 20px;
+        }
+
+        #api .working {
+            padding-top: 10px;
+        }
+
+        #api input {
+            width: 200px;
+            color: #faaf40;
+        }
+
+        #api .divider h2:after, #api .divider h2:before {
+            border-top: 1px solid #B8B8B8;
+            content: '';
+            display: table-cell;
+            position: relative;
+            top: .7em;
+            width: 50%;
+        }
+
+        #api .divider h2 {
+            display: table;
+            white-space: nowrap;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        #api button {
+            width: 200px;
+            -webkit-transition: all 0.2s ease-in-out 0s;
+            -o-transition: all 0.2s ease-in-out 0s;
+            transition: all 0.2s ease-in-out 0s;
+            border-width: 0px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-decoration: none;
+            word-spacing: 1px;
+            color: #ffffff;
+            background-color: #faaf40;
+            border-color: #faaf40;
+            padding: 8px 14px;
+            font-size: 16px;
+            border-radius: 0px;
+        }
+
+        #api a {
+            color: rgb(220, 200, 20);
+            cursor: pointer;
+        }
+
+        #createAccount {
+            margin-left: 20px;
+        }

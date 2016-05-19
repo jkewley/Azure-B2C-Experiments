@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="Mobirise v2.6.1, mobirise.com">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/discover-mobile-350x350-16.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/images/discover-mobile-350x350-16.png" type="image/x-icon">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:700,400&amp;subset=cyrillic,latin,greek,vietnamese">
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
             <div class="mbr-navbar__container">
                 <div class="mbr-navbar__column mbr-navbar__column--s mbr-navbar__brand">
                     <span class="mbr-navbar__brand-link mbr-brand mbr-brand--inline">
-                            <span class="mbr-brand__logo"><a href="https://mobirise.com/bootstrap-template/"><img class="mbr-navbar__brand-img mbr-brand__img" src="assets/images/discover-mobile-350x350-53.png" alt="Mobirise"></a></span>
+                            <span class="mbr-brand__logo"><a href="https://mobirise.com/bootstrap-template/"><img class="mbr-navbar__brand-img mbr-brand__img" src="/assets/images/discover-mobile-350x350-53.png" alt="Mobirise"></a></span>
                             <span class="mbr-brand__name">@Html.ActionLink("Home", "Index", "Home", null, new{@class = "mbr-brand__name text-white"}) </span>
                     </span>
                 </div>
@@ -40,7 +40,7 @@
                         </ul></div>
                         <div class="mbr-navbar__column">
                             @if (Request.IsAuthenticated) {
-                                <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active"><li class="mbr-navbar__item"><a id="profile-link">@User.Identity.Name yes</a></li><li class="mbr-navbar__item">@Html.ActionLink("SIGN OUT", "Logout", "Account", null, new { @class = "mbr-buttons__btn btn btn-default" }))</li></ul>
+                                <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active"><li class="mbr-navbar__item"><a id="profile-link">@User.Identity.Name</a></li><li class="mbr-navbar__item">@Html.ActionLink("SIGN OUT", "Logout", "Account", null, new { @class = "mbr-buttons__btn btn btn-default" }))</li></ul>
                             }
                             else {
                                 <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active"><li class="mbr-navbar__item">@Html.ActionLink("SIGN IN", "Login", "Account", null, new { @class = "mbr-buttons__btn btn btn-default" }))</li></ul>
