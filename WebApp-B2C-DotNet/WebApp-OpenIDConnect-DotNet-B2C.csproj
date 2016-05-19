@@ -146,7 +146,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +164,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\B2C.mdf" />
+    <Content Include="App_Data\B2C_log.ldf">
+      <DependentUpon>B2C.mdf</DependentUpon>
+    </Content>
     <Content Include="assets\animate.css\animate.min.css" />
     <Content Include="assets\B2CLogins\B2C.css" />
     <Content Include="assets\B2CLogins\SignUp.html" />
