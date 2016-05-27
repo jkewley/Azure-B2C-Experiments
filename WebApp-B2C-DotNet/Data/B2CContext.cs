@@ -11,6 +11,6 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Data
     public class B2CContext : DbContext
     {
         public B2CContext() : base("B2CContext") {}
-        public DbSet<Applicant> Users { get; set; }
+        public DbSet<Applicant> Applicants { get; set; }
     }
 }

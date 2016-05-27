@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApp_OpenIDConnect_DotNet_B2C.Model
 {
-    public class Applicant
+    public class User
     {
         [MaxLength(250)]
         public string EmailAddress { get; set; }
@@ -18,13 +17,5 @@ namespace WebApp_OpenIDConnect_DotNet_B2C.Model
 
         [Key]
         public int UserID { get; set; }
-
-        public DateTime DateOfBirth { get; set; }
-
-        public byte[] EncryptionKey { get; set; }
-
-        public string Gender { get; set; }
-
-        public string Ethnicity { get; set; }
     }
 }

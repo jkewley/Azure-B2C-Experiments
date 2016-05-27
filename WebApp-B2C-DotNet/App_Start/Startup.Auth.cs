@@ -127,7 +127,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             string anOIDClaimValue = myClaims.FirstOrDefault(aClaim => aClaim.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
             if(string.IsNullOrEmpty(anOIDClaimValue)) throw new ApplicationException("Missing OID claim!");
             using(B2CContext aContext = new B2CContext()) {
-                Applicant anInternalApplicant = aContext.Users.FirstOrDefault(aUser => aUser.ExternalID == anOIDClaimValue);
+                Applicant anInternalApplicant = aContext.Applicants.FirstOrDefault(aUser => aUser.ExternalID == anOIDClaimValue);
                 if(anInternalApplicant == null) {
                     Applicant aNewApplicant = new Applicant {
                         ExternalID = anOIDClaimValue,
@@ -137,7 +137,7 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
                         Ethnicity = myClaims.FirstOrDefault(aClaim => aClaim.Type == "extension_Ethnicity")?.Value,
                         DateOfBirth = DateTime.Now.AddYears(-20)
                     };
-                    aContext.Users.Add(aNewApplicant);
+                    aContext.Applicants.Add(aNewApplicant);
                     aContext.SaveChanges();
                 }
             }
