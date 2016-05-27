@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.IdentityModel.Tokens;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,6 +16,8 @@ using Microsoft.Owin.Security.OpenIdConnect;
 
 using Owin;
 
+using WebApp_OpenIDConnect_DotNet_B2C.Data;
+using WebApp_OpenIDConnect_DotNet_B2C.Model;
 using WebApp_OpenIDConnect_DotNet_B2C.Policies;
 
 // The following using statements were added for this sample
@@ -30,12 +35,12 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
         private static readonly string aadInstance = ConfigurationManager.AppSettings["ida:AadInstance"];
         private static readonly string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
         public static string PasswordResetPolicyId = ConfigurationManager.AppSettings["ida:PasswordResetPolicyId"];
+        public static readonly string ProfileEditPolicyId = ConfigurationManager.AppSettings["ida:ProfileEdit"];
         private static readonly string redirectUri = ConfigurationManager.AppSettings["ida:RedirectUri"];
 
         // B2C policy identifiers
         public static string SusiPolicyId = ConfigurationManager.AppSettings["ida:SusiPolicyId"];
         private static readonly string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
-        public static readonly string ProfileEditPolicyId = ConfigurationManager.AppSettings["ida:ProfileEdit"];
 
         public void ConfigureAuth(IAppBuilder app) {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
@@ -77,14 +82,6 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             app.UseOpenIdConnectAuthentication(options);
         }
 
-        private Task OnSecurityTokenReceived(SecurityTokenReceivedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> aArg) {
-            return Task.FromResult(0);
-        }
-
-        private Task OnMessageReceived(MessageReceivedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> aArg) {
-            return Task.FromResult(0);
-        }
-
         // Used for avoiding yellow-screen-of-death TODO
         private Task AuthenticationFailed(AuthenticationFailedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification) {
             notification.HandleResponse();
@@ -102,6 +99,10 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             return Task.FromResult(0);
         }
 
+        private Task OnMessageReceived(MessageReceivedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> aArg) {
+            return Task.FromResult(0);
+        }
+
         // This notification can be used to manipulate the OIDC request before it is sent.  Here we use it to send the correct policy.
         private async Task OnRedirectToIdentityProvider(RedirectToIdentityProviderNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification) {
             PolicyConfigurationManager mgr = notification.Options.ConfigurationManager as PolicyConfigurationManager;
@@ -114,11 +115,32 @@ namespace WebApp_OpenIDConnect_DotNet_B2C
             }
         }
 
+        private Task OnSecurityTokenReceived(SecurityTokenReceivedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> aArg) {
+            return Task.FromResult(0);
+        }
+
         private Task OnSecurityTokenValidated(SecurityTokenValidatedNotification<OpenIdConnectMessage, OpenIdConnectAuthenticationOptions> notification) {
             // If you wanted to keep some local state in the app (like a db of signed up users),
             // you could use this notification to create the user record if it does not already
             // exist.
-
+            List<Claim> myClaims = notification.AuthenticationTicket.Identity.Claims.ToList();
+            string anOIDClaimValue = myClaims.FirstOrDefault(aClaim => aClaim.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")?.Value;
+            if(string.IsNullOrEmpty(anOIDClaimValue)) throw new ApplicationException("Missing OID claim!");
+            using(B2CContext aContext = new B2CContext()) {
+                Applicant anInternalApplicant = aContext.Users.FirstOrDefault(aUser => aUser.ExternalID == anOIDClaimValue);
+                if(anInternalApplicant == null) {
+                    Applicant aNewApplicant = new Applicant {
+                        ExternalID = anOIDClaimValue,
+                        FirstName = myClaims.FirstOrDefault(aClaim => aClaim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname")?.Value,
+                        LastName = myClaims.FirstOrDefault(aClaim => aClaim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname")?.Value,
+                        Gender = myClaims.FirstOrDefault(aClaim => aClaim.Type == "extension_Gender")?.Value,
+                        Ethnicity = myClaims.FirstOrDefault(aClaim => aClaim.Type == "extension_Ethnicity")?.Value,
+                        DateOfBirth = DateTime.Now.AddYears(-20)
+                    };
+                    aContext.Users.Add(aNewApplicant);
+                    aContext.SaveChanges();
+                }
+            }
             return Task.FromResult(0);
         }
     }
